@@ -29,9 +29,10 @@
                     <x-breeze::nav-link :href="route('pago.digital')" :active="request()->routeIs('pago.digital')">
                         {{ __('Pagos') }}
                     </x-breeze::nav-link>
-                    <x-breeze::nav-link :href="route('publicacion.vehiculo')" :active="request()->routeIs('publicacion.vehiculo')">
+                    <x-breeze::nav-link :href="auth()->check() ? route('publicacion.vehiculo') : route('login')">
                         {{ __('Vehiculos') }}
                     </x-breeze::nav-link>
+                   
                 <!-- ========== -->
                 <x-breeze::nav-link :href="route('soporte.comunicacion')" :active="request()->routeIs('soporte.comunicacion')">
                     {{ __('Soporte') }}

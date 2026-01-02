@@ -1,3 +1,3 @@
 <x-page>
-    <h1>Vista Principal Módulo Publicación Vehiculos</h1>
+    @include('modules.PublicacionVehiculo.components.formPublicVeh')
 </x-page>
