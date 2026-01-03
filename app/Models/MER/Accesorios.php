@@ -17,17 +17,17 @@ class Accesorios extends Model
 	];
 
 	protected $fillable = [
-		'id',
 		'des'
 	];
-
-	// public function marca()
-	// {
-	// 	return $this->belongsTo(Marca::class, 'codmar');
-	// }
-
-	// public function vehiculos()
-	// {
-	// 	return $this->hasMany(Vehiculo::class, 'codlin');
-	// }
+	public function vehiculos()
+	{
+		return $this->belongsToMany(
+			\App\Models\MER\Vehiculo::class,
+			'vehiculos_accesorios',
+			'idacc',   // FK en pivote que apunta a accesorios
+			'codveh',  // FK en pivote que apunta a vehiculos
+			'id',      // PK local en accesorios
+			'cod'      // PK local en vehiculos
+		);
+	}
 }

@@ -39,7 +39,7 @@ class Vehiculo extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'mod' => 'int',
+		'mod' => 'integer',
 		'pas' => 'int',
 		'cil' => 'int',
 		'codpol' => 'int',
@@ -101,4 +101,16 @@ class Vehiculo extends Model
 	{
 		return $this->hasMany(Reserva::class, 'codveh');
 	}
+
+	public function accesorios()
+    {
+        return $this->belongsToMany(
+            \App\Models\MER\Accesorios::class, 
+            'vehiculos_accesorios',            
+            'codveh',                          
+            'idacc',                           
+            'cod',                             
+            'id'                               
+        );
+    }
 }

@@ -41,45 +41,45 @@ class VehController extends Controller
         
     }
 
-    // public function store(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'vin' => ['required', 'string', 'size:17'],
-    //         'mod' => ['required', 'integer', 'between:1900,' . (date('Y') + 1)],
-    //         'col' => ['required', 'string', 'max:30'],
-    //         'pas' => ['required', 'integer', 'min:1', 'max:99'],
-    //         'cil' => ['required', 'integer', 'min:50', 'max:10000'],
-    //         'codpol' => ['nullable', 'integer'],
-    //         'codmar' => ['required', 'integer'],
-    //         'codlin' => ['required', 'integer'],
-    //         'codcla' => ['required', 'integer'],
-    //         'codcom' => ['required', 'integer'],
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'vin' => ['required', 'string'],
+            'mod' => ['required', 'integer', 'between:1900,' . (date('Y') + 1)],
+            'col' => ['required', 'string', 'max:30'],
+            'pas' => ['required', 'integer', 'min:1', 'max:99'],
+            'cil' => ['required', 'integer', 'min:50', 'max:10000'],
+            'codpol' => ['nullable', 'integer'],
+            'codmar' => ['required', 'integer'],
+            'codlin' => ['required', 'integer'],
+            'codcla' => ['required', 'integer'],
+            'codcom' => ['required', 'integer'],
 
-    //         'accesorios' => ['nullable', 'array'],
-    //         // 'accesorios.*' => ['integer', 'exists:accesorios,cod'] // ⚠️ POSIBLE: depende de tu PK real (cod vs id)
-    //         'accesorios.*' => ['integer', 'exists:accesorios,id'], // ⚠️ POSIBLE MAL: si tu tabla no tiene 'id' sino 'cod'
-    //     ]);
+            'accesorios' => ['nullable', 'array'],
+            // 'accesorios.*' => ['integer', 'exists:accesorios,cod'],
+            'accesorios.*' => ['integer', 'exists:accesorios,id']
+        ]);
 
-    //     return DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data) {
 
-    //         $vehiculo = \App\Models\MER\Vehiculo::create([
-    //             'vin' => $data['vin'],
-    //             'mod' => $data['mod'],
-    //             'col' => $data['col'],
-    //             'pas' => $data['pas'],
-    //             'cil' => $data['cil'],
-    //             'codpol' => $data['codpol'] ?? null,
-    //             'codmar' => $data['codmar'],
-    //             'codlin' => $data['codlin'],
-    //             'codcla' => $data['codcla'],
-    //             'codcom' => $data['codcom'],
-    //         ]);
+            $vehiculo = \App\Models\MER\Vehiculo::create([
+                'vin' => $data['vin'],
+                'mod' => $data['mod'],
+                'col' => $data['col'],
+                'pas' => $data['pas'],
+                'cil' => $data['cil'],
+                'codpol' => $data['codpol'] ?? null,
+                'codmar' => $data['codmar'],
+                'codlin' => $data['codlin'],
+                'codcla' => $data['codcla'],
+                'codcom' => $data['codcom'],
+            ]);
 
-    //         $vehiculo->accesorios()->sync($data['accesorios'] ?? []); // ⚠️ MAL si la relación accesorios() no existe o pivote/keys no coinciden
+            $vehiculo->accesorios()->sync($data['accesorios'] ?? []); // ⚠️ MAL si la relación accesorios() no existe o pivote/keys no coinciden
 
-    //         return redirect()->back()->with('ok', 'Vehículo y accesorios guardados.');
-    //     });
-    // }
+            return redirect()->back()->with('ok', 'Vehículo y accesorios guardados.');
+        });
+    }
 
     // public function show(ClaseVeh $claseVeh) 
     // {
