@@ -1,0 +1,468 @@
+:root{
+  --wine: #8c1f33;
+  --wine-2: #b01f3c;
+  --border: #d8b6bd;
+  --text: #222;
+  --muted: #777;
+  --bg: #ffffff;
+}
+
+.docs-card{
+  width: min(520px, 100%);
+  background: var(--bg);
+  padding: 18px 18px 22px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  border-radius: 5px;
+}
+
+.docs-title{
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.docs-row{
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.docs-label{
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.docs-actions{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Botón tipo "Añadir archivo" */
+.btn-file{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--wine);
+  border-radius: 2px;
+  color: var(--wine);
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-file.is-solid{
+  background: var(--wine-2);
+  border-color: var(--wine-2);
+  color: #fff;
+}
+
+.btn-file input[type="file"]{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Estado */
+.docs-status{
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.docs-status.is-ok{
+  color: #666;
+}
+
+/* Texto informativo */
+.docs-note{
+  margin: 14px 0 10px;
+  font-size: 12.5px;
+  color: #555;
+  line-height: 1.35;
+}
+
+/* Área grande de fotos */
+.photo-drop{
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  height: 130px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.photo-drop input[type="file"]{
+  display: none;
+}
+
+.photo-inner{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 6px;
+  color: var(--wine);
+}
+
+.photo-text{
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.photo-icon{
+  color: var(--wine);
+}
+
+/* Botón final */
+.btn-submit{
+  margin-top: 18px;
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 2px;
+  background: var(--wine-2);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn-submit:active{
+  transform: translateY(1px);
+}
+
+.photo-preview{
+  width: 100%;
+  min-height: 320px;
+  background: #fff;
+  border: 2px solid #b8e0b8;
+  border-radius: 6px;
+  padding: 12px;
+  overflow: auto;
+}
+
+.photo-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.photo-card{
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px;
+  position: relative;
+}
+
+.photo-card img{
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.photo-card .meta{
+  font-size: 12px;
+  margin-top: 6px;
+  color: #444;
+  word-break: break-all;
+}
+
+.photo-card button{
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  background: #8c1f33;
+  color: #fff;
+  font-size: 12px;
+}
+
+.photo-empty{
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+  padding: 30px 10px;
+  text-align: center;
+}
+
+.error{
+  color: #b00020;
+  display:block;
+  margin-top: 6px;
+  font-size: 13px;
+}
+.help{
+  display:block;
+  margin-top: 6px;
+  color:#555;
+  font-size: 13px;
+}
+
+
+:root{
+  --wine: #8c1f33;
+  --wine-2: #b01f3c;
+  --border: #d8b6bd;
+  --text: #222;
+  --muted: #777;
+  --bg: #ffffff;
+}
+
+/* ===== CONTENEDOR Y OVERLAY (para fondos con imagen) ===== */
+.docs-wrap{
+  position: relative;
+  min-height: calc(100vh - 90px);
+  padding: 28px 16px;
+  display: grid;
+  place-items: start center;
+  z-index: 0;
+}
+
+.docs-wrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.45);
+  z-index: 0;
+}
+
+/* ===== CARD ===== */
+.docs-card{
+  position: relative;
+  z-index: 1;
+  width: min(820px, 100%);
+  background: rgba(255,255,255,.96);
+  border: 1px solid rgba(216,182,189,.8);
+  border-radius: 10px;
+  padding: 22px 22px 26px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  box-shadow: 0 18px 40px rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+}
+
+.docs-title{
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* ===== FORM ===== */
+.docs-form{
+  display: grid;
+  gap: 14px;
+}
+
+.docs-row{
+  display: grid;
+  gap: 8px;
+}
+
+.docs-label{
+  font-size: 13px;
+  font-weight: 800;
+  color: #1f1f1f;
+}
+
+.help{
+  display:block;
+  margin-top: 2px;
+  color:#555;
+  font-size: 13px;
+}
+
+.error{
+  color: #b00020;
+  display:block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+/* ===== INPUT TEXTO ===== */
+.docs-input{
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+  color: var(--text);
+}
+
+.docs-input::placeholder{ color:#9a9a9a; }
+
+.docs-input:focus{
+  border-color: var(--wine);
+  box-shadow: 0 0 0 3px rgba(140,31,51,.14);
+}
+
+/* ===== DOCUMENTOS: BOTÓN + ESTADO ===== */
+.docs-actions{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-file{
+  position: relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--wine);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--wine);
+  font-size: 13px;
+  font-weight: 700;
+  cursor:pointer;
+  user-select:none;
+}
+
+.btn-file:hover{ background: rgba(140,31,51,.06); }
+
+/* CLAVE: ocultar input file pero que siga clickeable */
+.btn-file input[type="file"]{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+
+.docs-status{
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.docs-status.is-ok{ color:#2f6b2f; }
+
+/* ===== FOTOS DROP ===== */
+.photo-drop{
+  display:block;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  min-height: 120px;
+  cursor: pointer;
+  background: #fff;
+}
+
+.photo-drop:hover{
+  border-color: var(--wine);
+  box-shadow: 0 0 0 3px rgba(140,31,51,.10);
+}
+
+.photo-drop input[type="file"]{ display:none; }
+
+.photo-inner{
+  height: 100%;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  gap:6px;
+  padding: 18px;
+  color: var(--wine);
+}
+
+.photo-text{
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ===== PREVIEW ===== */
+.photo-preview{
+  width: 100%;
+  min-height: 240px;
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  padding: 12px;
+  overflow:auto;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.photo-card{
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+}
+
+.photo-card img{
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  display:block;
+}
+
+.photo-card .meta{
+  font-size: 12px;
+  margin-top: 6px;
+  color: #444;
+  word-break: break-all;
+}
+
+.photo-card button{
+  position:absolute;
+  top: 8px;
+  right: 8px;
+  border:none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor:pointer;
+  background: var(--wine);
+  color:#fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.photo-empty{
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+  padding: 26px 10px;
+  text-align:center;
+}
+
+/* ===== BOTÓN FINAL ===== */
+.btn-submit{
+  margin-top: 10px;
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 10px;
+  background: var(--wine-2);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  cursor:pointer;
+}
+
+.btn-submit:disabled{
+  opacity: .55;
+  cursor:not-allowed;
+}
+
+

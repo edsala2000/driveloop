@@ -102,6 +102,8 @@ class Vehiculo extends Model
 		return $this->hasMany(Reserva::class, 'codveh');
 	}
 
+	
+
 	public function accesorios()
     {
         return $this->belongsToMany(
@@ -113,4 +115,9 @@ class Vehiculo extends Model
             'id'                               
         );
     }
+
+
+
+
+
 }

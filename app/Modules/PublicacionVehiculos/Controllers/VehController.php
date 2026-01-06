@@ -5,9 +5,10 @@ namespace App\Modules\PublicacionVehiculos\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
-use App\Models\MER\Marca;   
-use App\Models\MER\Accesorios;  
-use App\Models\MER\Linea;     
+use App\Models\MER\Marca;
+use App\Models\MER\Accesorios;
+use App\Models\MER\Linea;
+use App\Models\MER\Vehiculo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,14 +21,12 @@ class VehController extends Controller
             'vehiculoMarca' => Marca::all(),
             'vehiculoAccesorios' => Accesorios::all(),
             'vehiculoCombustible' => Combustible::all(),
-
-            
         ]);
     }
 
     public function lineasPorMarca(int $cod)
     {
-        $lineas = Linea::query() 
+        $lineas = Linea::query()
             ->select('cod', 'des')
             ->where('codmar', $cod)
             ->orderBy('des')
@@ -36,10 +35,7 @@ class VehController extends Controller
         return response()->json($lineas);
     }
 
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     public function store(Request $request)
     {
@@ -56,7 +52,6 @@ class VehController extends Controller
             'codcom' => ['required', 'integer'],
 
             'accesorios' => ['nullable', 'array'],
-            // 'accesorios.*' => ['integer', 'exists:accesorios,cod'],
             'accesorios.*' => ['integer', 'exists:accesorios,id']
         ]);
 
@@ -75,29 +70,37 @@ class VehController extends Controller
                 'codcom' => $data['codcom'],
             ]);
 
-            $vehiculo->accesorios()->sync($data['accesorios'] ?? []); // ⚠️ MAL si la relación accesorios() no existe o pivote/keys no coinciden
+            $vehiculo->accesorios()->sync($data['accesorios'] ?? []);
 
-            return redirect()->back()->with('ok', 'Vehículo y accesorios guardados.');
+            return redirect()->route('vehiculo-ver');
         });
     }
 
+    public function vehiculo()
+    {
+        return view('modules.PublicacionVehiculo.documentVehic', [
+            'vehiculo' => Vehiculo::all(),
+        ]);
+    }
+
+
     // public function show(ClaseVeh $claseVeh) 
     // {
-        
+
     // }
 
     // public function edit(ClaseVeh $claseVeh) 
     // {
-        
+
     // }
 
     // public function update(Request $request, ClaseVeh $claseVeh) 
     // {
-        
+
     // }
 
     // public function destroy(ClaseVeh $claseVeh) 
     // {
-        
+
     // }
 }
