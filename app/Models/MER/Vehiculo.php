@@ -5,6 +5,7 @@ namespace App\Models\MER;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MER\FotoVehiculo;
 
 /**
  * Class Vehiculo
@@ -51,6 +52,7 @@ class Vehiculo extends Model
 	];
 
 	protected $fillable = [
+		'user_id',
 		'vin',
 		'mod',
 		'col',
@@ -122,5 +124,10 @@ class Vehiculo extends Model
 	public function ciudad()
 	{
 		return $this->belongsTo(\App\Models\MER\CiudadVehiculo::class, 'codciuveh', 'codciuveh');
+	}
+
+	public function fotos()
+	{
+		return $this->hasMany(FotoVehiculo::class, 'codveh', 'cod');
 	}
 }

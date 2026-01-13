@@ -7,7 +7,7 @@ use App\Modules\PublicacionVehiculos\Controllers\VehiculoDocumentosController;
 Route::prefix('publi-vehiculo')->group(function () {
     Route::get('/publicacion-vehiculo', [VehController::class, 'index'])
         ->name('publicacion.vehiculo');
-    
+
     Route::post('/publicacion-vehiculo', [VehController::class, 'store'])
         ->name('publicacion.vehiculo.store');
 
@@ -15,8 +15,11 @@ Route::prefix('publi-vehiculo')->group(function () {
         ->name('marcas.lineas');
     Route::get('/docVeh', [VehController::class, 'vehiculo'])
         ->name('vehiculo-ver');
+    Route::get('/vehiculos/{codveh}/documentos', [VehiculoDocumentosController::class, 'create'])
+        ->middleware(['auth'])
+        ->name('vehiculo.documentos.create');
     Route::post('/vehiculos/documentos', [VehiculoDocumentosController::class, 'store'])
-    ->name('vehiculo.documentos.store');
+        ->name('vehiculo.documentos.store');
     Route::get('/departamentos/{coddepveh}/ciudades', [VehController::class, 'ciudadesPorDepartamento'])
         ->name('departamentos.ciudades');
 });

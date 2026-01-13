@@ -11,9 +11,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class VehiculoDocumentosController extends Controller
 {
+    public function create(int $codveh)
+    {
+        $vehiculo = Vehiculo::where('user_id', Auth::id())
+            ->where('cod', $codveh)
+            ->firstOrFail();
+
+        return view('modules.PublicacionVehiculo.documentVehic', compact('vehiculo'));
+    }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -126,6 +138,6 @@ class VehiculoDocumentosController extends Controller
             }
         });
 
-        return back()->with('ok', 'Guardado OK');
+        return redirect()->route('dashboard')->with('ok', 'Guardado OK');
     }
 }

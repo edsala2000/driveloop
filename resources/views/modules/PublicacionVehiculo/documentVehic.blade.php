@@ -10,8 +10,9 @@
 <div class="docs-grid">
     <div class="docs-left">
       {{-- PK del vehículo (FK) --}}
-      <input type="hidden" name="codveh" value="{{ $vehiculo->first()->cod }}">
+      {{-- <input type="hidden" name="codveh" value="{{ $vehiculo->first()->cod }}"> --}}
 
+       <input type="hidden" name="codveh" value="{{ $vehiculo->cod }}">
       {{-- Placa --}}
       <div class="docs-row">
         <label class="docs-label" for="placa">Placa del vehículo</label>

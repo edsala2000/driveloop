@@ -3,9 +3,11 @@
 namespace App\Modules\PublicacionVehiculos\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\MER\Clase;
 use App\Models\MER\Combustible;
 use App\Models\MER\Marca;
+use App\Models\MER\User;
 use App\Models\MER\Accesorios;
 use App\Models\MER\CiudadVehiculo;
 use App\Models\MER\DepartamentoVehiculo;
@@ -18,7 +20,7 @@ class VehController extends Controller
 {
     public function index()
     {
-        return view('modules.PublicacionVehiculo.index', [
+        return view('modules.PublicacionVehiculo.registroVeh', [
             'vehiculoClase' => Clase::all(),
             'vehiculoMarca' => Marca::all(),
             'vehiculoAccesorios' => Accesorios::all(),
@@ -75,6 +77,7 @@ class VehController extends Controller
         return DB::transaction(function () use ($data) {
 
             $vehiculo = \App\Models\MER\Vehiculo::create([
+                'user_id' => Auth::id(),
                 'vin' => $data['vin'],
                 'mod' => $data['mod'],
                 'col' => $data['col'],
@@ -90,7 +93,8 @@ class VehController extends Controller
 
             $vehiculo->accesorios()->sync($data['accesorios'] ?? []);
 
-            return redirect()->route('vehiculo-ver');
+            // return redirect()->route('vehiculo-ver');
+            return redirect()->route('vehiculo.documentos.create', ['codveh' => $vehiculo->cod]);
         });
     }
 
