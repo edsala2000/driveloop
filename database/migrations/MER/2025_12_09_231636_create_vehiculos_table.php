@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->unsignedBigInteger('cod', true);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('user_id');
             $table->string('vin', 17);
             $table->year('mod');
             $table->string('col', 30);
