@@ -43,9 +43,9 @@ class ValidacionVehiculosController extends Controller
         $docTecno   = $vehiculo->documentos_vehiculos->where('idtipdocveh', 3)->first();
 
         return view('modules.GestionUsuario.soporte.show_vehiculo', compact(
-            'vehiculo', 
-            'docTarjeta', 
-            'docSoat', 
+            'vehiculo',
+            'docTarjeta',
+            'docSoat',
             'docTecno'
         ));
     }
@@ -53,6 +53,20 @@ class ValidacionVehiculosController extends Controller
     /**
      * Aprueba un documento de vehículo.
      */
+    // public function approve($id)
+    // {
+    //     $documento = DocumentoVehiculo::findOrFail($id);
+
+    //     if ($documento->estado !== 'PENDIENTE') {
+    //         return back()->with('error', 'El documento no está en estado pendiente.');
+    //     }
+
+    //     $documento->estado = 'APROBADO';
+    //     $documento->mensaje_rechazo = null;
+    //     $documento->save();
+
+    //     return back()->with('success', 'Documento del vehículo aprobado correctamente.');
+    // }
     public function approve($id)
     {
         $documento = DocumentoVehiculo::findOrFail($id);
@@ -61,11 +75,28 @@ class ValidacionVehiculosController extends Controller
             return back()->with('error', 'El documento no está en estado pendiente.');
         }
 
-        $documento->estado = 'APROBADO';
-        $documento->mensaje_rechazo = null;
-        $documento->save();
+        $documento->update([
+            'estado' => 'APROBADO',
+            'mensaje_rechazo' => null,
+        ]);
 
-        return back()->with('success', 'Documento del vehículo aprobado correctamente.');
+        $codveh = $documento->codveh;
+
+        // ¿Aún quedan docs pendientes (1,2,3)?
+        $quedanPendientes = DocumentoVehiculo::where('codveh', $codveh)
+            ->whereIn('idtipdocveh', [1, 2, 3])
+            ->where('estado', 'PENDIENTE')
+            ->exists();
+
+        if (!$quedanPendientes) {
+            return redirect()
+                ->route('soporte.vehiculos.index')
+                ->with('success', 'Vehículo completamente revisado. Ya no aparece en pendientes.');
+        }
+
+        return redirect()
+            ->route('soporte.vehiculos.show', $codveh)
+            ->with('success', 'Documento aprobado. Aún quedan documentos pendientes.');
     }
 
     /**

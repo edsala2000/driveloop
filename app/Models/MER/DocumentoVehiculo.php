@@ -61,8 +61,12 @@ class DocumentoVehiculo extends Model
 		return $this->belongsTo(TipoDocVehiculo::class, 'idtipdocveh');
 	}
 
+	// public function vehiculo()
+	// {
+	// 	return $this->belongsTo(Vehiculo::class, 'codveh');
+	// }
 	public function vehiculo()
-	{
-		return $this->belongsTo(Vehiculo::class, 'codveh');
-	}
+{
+    return $this->belongsTo(\App\Models\MER\Vehiculo::class, 'codveh', 'cod');
+}
 }

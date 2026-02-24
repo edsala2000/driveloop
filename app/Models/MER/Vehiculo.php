@@ -55,7 +55,6 @@ class Vehiculo extends Model
 
 	protected $fillable = [
 		'user_id',
-		'user_id',
 		'vin',
 		'mod',
 		'col',
@@ -98,7 +97,7 @@ class Vehiculo extends Model
 
 	public function documentos_vehiculos()
 	{
-		return $this->hasMany(DocumentoVehiculo::class, 'codveh');
+		return $this->hasMany(\App\Models\MER\DocumentoVehiculo::class, 'codveh', 'cod');
 	}
 
 	public function fotos_vehiculos()
@@ -129,7 +128,6 @@ class Vehiculo extends Model
 	public function ciudad()
 	{
 		return $this->belongsTo(Ciudad::class, 'codciu', 'cod');
-
 	}
 
 	public function fotos()
@@ -146,7 +144,7 @@ class Vehiculo extends Model
 	public function isVerified(): bool
 	{
 		$docs = $this->documentos_vehiculos;
-		
+
 		$hasTarjeta = $docs->where('idtipdocveh', 1)->where('estado', 'APROBADO')->isNotEmpty();
 		$hasSoat    = $docs->where('idtipdocveh', 2)->where('estado', 'APROBADO')->isNotEmpty();
 		$hasTecno   = $docs->where('idtipdocveh', 3)->where('estado', 'APROBADO')->isNotEmpty();
