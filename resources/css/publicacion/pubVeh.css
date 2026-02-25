@@ -90,7 +90,7 @@
   outline:none;
   background:#fff;
   color:var(--text);
-  border-radius:0;
+  border-radius:10px;
   font-size:14px;
 }
 
@@ -99,6 +99,7 @@
 .veh-field input:focus,
 .veh-select select:focus{
   border-color:var(--wine-2);
+  border-radius:10px;
   box-shadow:0 0 0 2px rgba(176,31,60,.12);
 }
 
@@ -253,7 +254,7 @@
   font-size:28px;
   font-weight:800;
   cursor:pointer;
-  border-radius:0;
+  border-radius:10px;
   letter-spacing:.2px;
 }
 
@@ -272,8 +273,8 @@
 
 
 :root{
-  --wine: #8c1f33;
-  --wine-2: #b01f3c;
+  --wine: #c81843;
+  --wine-2: #9a1b39;
   --border: #d8b6bd;
   --text: #222;
   --muted: #777;
