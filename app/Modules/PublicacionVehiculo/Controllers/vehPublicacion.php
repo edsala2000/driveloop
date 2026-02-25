@@ -34,6 +34,7 @@ class vehPublicacion extends Controller
             'vehiculos' => $vehiculos,
         ]);
     }
+
     public function edit(int $cod)
     {
         $vehiculo = Vehiculo::with(['marca', 'linea', 'clase', 'ciudad'])
@@ -54,8 +55,6 @@ class vehPublicacion extends Controller
             'deptoVehiculo' => Departamento::all(),
         ]);
     }
-
-
 
     public function update(Request $request, int $cod)
     {
@@ -98,15 +97,11 @@ class vehPublicacion extends Controller
 
             $vehiculo->accesorios()->sync($data['accesorios'] ?? []);
         });
-
+        // modificacion en ruta para redireccionamiento al dashboard una ves finalizada la edicion del vehículo
         return redirect()
-            ->route('vehiculos.edit', $vehiculo->cod)
-            ->with('ask_docs', true)
+            ->route('dashboard')
             ->with('success', 'Vehículo actualizado correctamente.');
     }
-
-
-
 
     public function documentosCreate(int $codveh)
     {
@@ -117,6 +112,7 @@ class vehPublicacion extends Controller
 
         return view('vehiculos.documentos.create', compact('vehiculo'));
     }
+
     public function documentosStore(Request $request, int $codveh)
     {
         $vehiculo = Vehiculo::where('cod', $codveh)
@@ -124,13 +120,10 @@ class vehPublicacion extends Controller
             ->firstOrFail();
 
         $data = $request->validate([
-            // ejemplo: ajusta a tu estructura real
             'tarjeta' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'soat'    => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'tecno'   => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
         ]);
-
-        // Guardar archivos y registrar en BD (según tu modelo DocumentoVehiculo)
 
         return redirect()->route('vehiculo-ver')->with('success', 'Documentos actualizados.');
     }

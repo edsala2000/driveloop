@@ -13,6 +13,7 @@ use App\Models\MER\Departamento;
 use App\Models\MER\Linea;
 use App\Models\MER\Vehiculo;
 use Illuminate\Http\Request;
+use App\Models\MER\FotoVehiculo;
 use Illuminate\Support\Facades\DB;
 
 class VehController extends Controller
@@ -123,26 +124,15 @@ class VehController extends Controller
         return view('modules.PublicacionVehiculo.documentVehic', compact('vehiculos'));
     }
 
-    // public function activar(int $codveh)
-    // {
-    //     $TIPOS_REQUERIDOS = [1, 2, 3];
+    // Se actualiza el método autosDestacados para utilizar el scope verified, asegurando que solo se muestren en el home vehículos con documentación aprobada
+    public function autosDestacados()
+    {
+        $vehiculos = Vehiculo::verified()
+            ->with(['marca', 'linea', 'ciudad', 'fotos_vehiculos'])
+            ->latest('cod')
+            ->limit(12)
+            ->get();
 
-    //     $vehiculo = Vehiculo::where('user_id', Auth::id())
-    //         ->where('cod', $codveh)
-    //         ->firstOrFail();
-
-    //     $aprobados = $vehiculo->documentos_vehiculos()
-    //         ->whereIn('idtipdocveh', $TIPOS_REQUERIDOS)
-    //         ->where('estado', 'APROBADO')
-    //         ->count();
-
-    //     if ($aprobados !== count($TIPOS_REQUERIDOS)) {
-    //         return back()->with('error', 'No puedes publicar: tus documentos aún no están aprobados.');
-    //     }
-
-    //     // disp = publicado/visible (si lo manejas así)
-    //     $vehiculo->update(['disp' => 1]);
-
-    //     return back()->with('ok', 'Vehículo publicado correctamente.');
-    // }
+        return view('home', compact('vehiculos'));
+    }
 }

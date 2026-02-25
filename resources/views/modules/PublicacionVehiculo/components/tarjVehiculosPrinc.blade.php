@@ -1,226 +1,131 @@
- <div class="body">
+<section class="relative py-20 bg-center bg-no-repeat"
+    style="
+        background-image: url('{{ asset('img/fondo-carrusel.jpg.jpeg') }}');
+        background-size: 100%;
+    ">
+
     
-    <div class="contenedor">
+    <div class="absolute inset-0 bg-black/70"></div>
 
-        <div class="text-princ">
-            <h1>Autos destacados</h1>
-            <h3 class="subtitulo">Alquila fácil, rápido y seguro, elige el que más te guste.</h3>
+    <!-- Contenido encima del overlay -->
+    <div class="relative max-w-7xl mx-auto px-6">
+
+        <!-- Título como la imagen -->
+        <div class="mb-10">
+            <h2 class="text-white text-4xl font-bold">Autos destacados</h2>
+            <p class="text-gray-300 mt-2 text-sm">
+                Alquila fácil, rápido y seguro, elige el que más te guste.
+            </p>
         </div>
-            <div class="container swiper">
-                <div class="card-wrapper">
-                    
-                    <ul class="card-list swiper-wrapper">
 
-                        <li class="card-item swiper-slide">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
 
-                            <a href="#" class="card-link"></a>
-                            <img class="fondo-auto" src="AUTO.jpg" alt="Foto auto rojo">
-                                    <div class="info-tarjeta">
-                                        <div class="info">
+                @foreach ($vehiculos as $vehiculo)
+                    @php
+                        $ruta = $vehiculo->fotos_vehiculos->first()?->ruta;
 
-                                            <h2 class="vehtitulo">Chevrolet spark GT</h2>
-                                            
-                                            <div class="info-iconos">
-                                                <div class="icono">
-                                                    <img class="icon-estrella" src="ICONOS-17.png" alt="icono estrella">
-                                                    <h2>5.0</h2>
-                                                </div>
-                                                <div class="icono">
-                                                    <img class="icon-ubi" src="ICONOS-16.png" alt="icono ubicacion">
-                                                    <h2>Cali</h2>
-                                                </div>
-                                            </div>
+                        if (!$ruta) {
+                            $fotoUrl = asset('img/no-image.jpg');
+                        } elseif (str_starts_with($ruta, 'http')) {
+                            $fotoUrl = $ruta;
+                        } else {
+                            $ruta = ltrim($ruta, '/');
+                            if (!str_starts_with($ruta, 'vehiculos/')) {
+                                $ruta = 'vehiculos/' . $ruta;
+                            }
+                            $fotoUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($ruta);
+                        }
 
-                                            <div class="icono icon-p">
-                                                    <img class="icon-perso" src="ICONOS-18.png" alt="icono persona">
-                                                    <h4>5 Personas</h4>
-                                            </div>
+                        $precio = number_format((float) ($vehiculo->prerent ?? 0), 0, ',', '.');
+                    @endphp
 
-                                            <div class="buttom-princ">
-                                                <h3 class="precio">$150.000 / día</h3>
-                                                <h3 class="rentar">Rentar</h3>
-                                            </div>
+                    <div class="swiper-slide">
+                        <article class="overflow-hidden rounded-2xl bg-white shadow-sm w-full max-w-xs mx-auto">
 
-                                        </div>
+                            <!-- Imagen (sin “borde raro”) -->
+                            <div class="h-44 w-full bg-gray-100">
+                                <img src="{{ $fotoUrl }}" alt="Foto vehículo"
+                                    class="h-full w-full object-cover block" loading="lazy" />
+                            </div>
+
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-x-10 gap-y-2 text-sm">
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="font-bold text-gray-900">Marca:</span>
+                                        <span class="text-gray-700 uppercase">{{ $vehiculo->marca?->des ?? '---' }}</span>
                                     </div>
-                        </li>
 
-                        <li class="card-item swiper-slide">
-
-                            <a href="#" class="card-link"></a>
-                            <img class="fondo-auto" src="AUTO.jpg" alt="Foto auto rojo">
-                                    <div class="info-tarjeta">
-                                        <div class="info">
-
-                                            <h2 class="vehtitulo">Chevrolet spark GT</h2>
-                                            
-                                            <div class="info-iconos">
-                                                <div class="icono">
-                                                    <img class="icon-estrella" src="ICONOS-17.png" alt="icono estrella">
-                                                    <h2>5.0</h2>
-                                                </div>
-                                                <div class="icono">
-                                                    <img class="icon-ubi" src="ICONOS-16.png" alt="icono ubicacion">
-                                                    <h2>Cali</h2>
-                                                </div>
-                                            </div>
-
-                                            <div class="icono icon-p">
-                                                    <img class="icon-perso" src="ICONOS-18.png" alt="icono persona">
-                                                    <h4>5 Personas</h4>
-                                            </div>
-
-                                            <div class="buttom-princ">
-                                                <h3 class="precio">$150.000 / día</h3>
-                                                <h3 class="rentar">Rentar</h3>
-                                            </div>
-
-                                        </div>
+                                    <div class="flex items-baseline justify-end gap-2 text-right">
+                                        <span class="font-bold text-gray-900">Modelo:</span>
+                                        <span class="text-gray-700">{{ $vehiculo->mod ?? '---' }}</span>
                                     </div>
-                        </li>
 
-                        <li class="card-item swiper-slide">
-
-                            <a href="#" class="card-link"></a>
-                            <img class="fondo-auto" src="AUTO.jpg" alt="Foto auto rojo">
-                                    <div class="info-tarjeta">
-                                        <div class="info">
-
-                                            <h2 class="vehtitulo">Chevrolet spark GT</h2>
-                                            
-                                            <div class="info-iconos">
-                                                <div class="icono">
-                                                    <img class="icon-estrella" src="ICONOS-17.png" alt="icono estrella">
-                                                    <h2>5.0</h2>
-                                                </div>
-                                                <div class="icono">
-                                                    <img class="icon-ubi" src="ICONOS-16.png" alt="icono ubicacion">
-                                                    <h2>Cali</h2>
-                                                </div>
-                                            </div>
-
-                                            <div class="icono icon-p">
-                                                    <img class="icon-perso" src="ICONOS-18.png" alt="icono persona">
-                                                    <h4>5 Personas</h4>
-                                            </div>
-
-                                            <div class="buttom-princ">
-                                                <h3 class="precio">$150.000 / día</h3>
-                                                <h3 class="rentar">Rentar</h3>
-                                            </div>
-
-                                        </div>
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="font-bold text-gray-900">Línea:</span>
+                                        <span class="text-gray-700">{{ $vehiculo->linea?->des ?? '---' }}</span>
                                     </div>
-                        </li>
 
-                        <li class="card-item swiper-slide">
-
-                            <a href="#" class="card-link"></a>
-                            <img class="fondo-auto" src="AUTO.jpg" alt="Foto auto rojo">
-                                    <div class="info-tarjeta">
-                                        <div class="info">
-
-                                            <h2 class="vehtitulo">Chevrolet spark GT</h2>
-                                            
-                                            <div class="info-iconos">
-                                                <div class="icono">
-                                                    <img class="icon-estrella" src="ICONOS-17.png" alt="icono estrella">
-                                                    <h2>5.0</h2>
-                                                </div>
-                                                <div class="icono">
-                                                    <img class="icon-ubi" src="ICONOS-16.png" alt="icono ubicacion">
-                                                    <h2>Cali</h2>
-                                                </div>
-                                            </div>
-
-                                            <div class="icono icon-p">
-                                                    <img class="icon-perso" src="ICONOS-18.png" alt="icono persona">
-                                                    <h4>5 Personas</h4>
-                                            </div>
-
-                                            <div class="buttom-princ">
-                                                <h3 class="precio">$150.000 / día</h3>
-                                                <h3 class="rentar">Rentar</h3>
-                                            </div>
-
-                                        </div>
+                                    <div class="flex items-baseline justify-end gap-2 text-right">
+                                        <span class="font-bold text-gray-900">Color:</span>
+                                        <span class="text-gray-700">{{ $vehiculo->col ?? '---' }}</span>
                                     </div>
-                        </li>
+                                </div>
+                            </div>
 
-                        <li class="card-item swiper-slide">
+                            <div class="grid grid-cols-2">
+                                <div class="rounded-bl-2xl bg-slate-900 px-4 py-3 text-center text-sm font-extrabold text-white">
+                                    ${{ $precio }} / DÍA
+                                </div>
 
-                            <a href="#" class="card-link"></a>
-                            <img class="fondo-auto" src="AUTO.jpg" alt="Foto auto rojo">
-                                    <div class="info-tarjeta">
-                                        <div class="info">
+                                <a href="#"
+                                    class="rounded-br-2xl bg-[#C91843] px-4 py-3 text-center text-sm font-extrabold text-white transition hover:bg-[#B0174B]">
+                                    RENTAR
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                @endforeach
 
-                                            <h2 class="vehtitulo">Chevrolet spark GT</h2>
-                                            
-                                            <div class="info-iconos">
-                                                <div class="icono">
-                                                    <img class="icon-estrella" src="ICONOS-17.png" alt="icono estrella">
-                                                    <h2>5.0</h2>
-                                                </div>
-                                                <div class="icono">
-                                                    <img class="icon-ubi" src="ICONOS-16.png" alt="icono ubicacion">
-                                                    <h2>Cali</h2>
-                                                </div>
-                                            </div>
-
-                                            <div class="icono icon-p">
-                                                    <img class="icon-perso" src="ICONOS-18.png" alt="icono persona">
-                                                    <h4>5 Personas</h4>
-                                            </div>
-
-                                            <div class="buttom-princ">
-                                                <h3 class="precio">$150.000 / día</h3>
-                                                <h3 class="rentar">Rentar</h3>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                        </li>
-                    </ul>
-
-                    <div class="swiper-pagination"></div>
-
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-                </div>
             </div>
+
+            <div class="swiper-button-next custom-arrow"></div>
+            <div class="swiper-button-prev custom-arrow"></div>
+            <div class="swiper-pagination mt-10"></div>
+        </div>
+
     </div>
-    </div>
- 
-    <script>
-        
-        new Swiper('.card-wrapper', {
-            loop: true,
-            spaceBetween: 30,
+</section>
 
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-                dynamicBullets: true,
+<script>
+    const swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+
+        breakpoints: {
+            640: {
+                slidesPerView: 1
             },
-
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+            768: {
+                slidesPerView: 2
             },
-
-            breakpoints: {
-                0: {
-                slidesPerView: 1,
-                },
-                768: {
-                slidesPerView: 2,
-                },
-                1024: {
-                slidesPerView: 3,
-                },
-            }
-        });
-
-    </script>
+            1024: {
+                slidesPerView: 3
+            },
+            1280: {
+                slidesPerView: 4
+            },
+        },
+    });
+</script>

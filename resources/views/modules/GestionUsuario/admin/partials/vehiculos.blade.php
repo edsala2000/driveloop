@@ -14,6 +14,8 @@
         ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 3)->where('estado', 'APROBADO'))
         ->orderBy('codmar', 'asc')
         ->get();
+
+        
 @endphp
 
 <x-card class="w-full p-8">

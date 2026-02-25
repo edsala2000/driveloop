@@ -5,6 +5,9 @@ use App\Modules\PublicacionVehiculo\Controllers\VehController;
 use App\Modules\PublicacionVehiculo\Controllers\vehPublicacion;
 use App\Modules\PublicacionVehiculo\Controllers\VehiculoDocumentosController;
 
+// Se modifica la ruta principal / para que apunte al método autosDestacados del controlador
+Route::get('/', [VehController::class, 'autosDestacados'])->name('home');
+
 Route::prefix('publi-vehiculo')->group(function () {
     Route::get('/publicacion-vehiculo', [VehController::class, 'index'])
         ->name('publicacion.vehiculo');
@@ -57,4 +60,5 @@ Route::prefix('publi-vehiculo')->group(function () {
 
     Route::post('/vehiculos/{codveh}/documentos', [VehiculoDocumentosController::class, 'store'])
         ->name('vehiculos.doc.store');
+        
 });
