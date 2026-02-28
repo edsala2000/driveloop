@@ -1,8 +1,7 @@
 <section class="relative py-20 bg-center bg-no-repeat"
     style="
         background-image: url('{{ asset('img/fondo-carrusel.jpg.jpeg') }}');
-        background-size: 100%;
-    ">
+        background-size: 100%;">
 
     
     <div class="absolute inset-0 bg-black/70"></div>

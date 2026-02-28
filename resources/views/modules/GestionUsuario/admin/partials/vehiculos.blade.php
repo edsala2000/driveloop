@@ -1,21 +1,17 @@
 @php
-    //Traer todos los usuarios con roles ordenados por orden de creacion descendente
     use App\Models\MER\Vehiculo;
     use App\Models\MER\Marca;
     use App\Models\MER\Linea;
     use App\Models\MER\User;
     use App\Models\MER\Clase;
-    // $vehiculos = Vehiculo::orderBy('codmar', 'asc')->get();
+    //Traer todos los usuarios con roles ordenados por orden de creacion descendente
     $vehiculos = Vehiculo::query()
-        ->where('user_id', auth()->id()) // si es “mis vehículos”
         ->with(['marca', 'linea', 'clase'])
         ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 1)->where('estado', 'APROBADO'))
         ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 2)->where('estado', 'APROBADO'))
         ->whereHas('documentos_vehiculos', fn($q) => $q->where('idtipdocveh', 3)->where('estado', 'APROBADO'))
         ->orderBy('codmar', 'asc')
         ->get();
-
-        
 @endphp
 
 <x-card class="w-full p-8">
